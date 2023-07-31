@@ -71,25 +71,26 @@ enum {
 
 static inline uint32_t swab32(uint32_t v)
 {
-#ifdef WANT_BUILTIN_BSWAP
 	return __builtin_bswap32(v);
-#else
-	return bswap_32(v);
-#endif
+//#ifdef WANT_BUILTIN_BSWAP
+//	return __builtin_bswap32(v);
+//#else
+//	return bswap_32(v);
+//#endif
 }
 
 #ifdef HAVE_SYS_ENDIAN_H
 #include <sys/endian.h>
 #endif
 
-#if !HAVE_DECL_BE32DEC
+//#if !HAVE_DECL_BE32DEC
 static inline uint32_t be32dec(const void *pp)
 {
 	const uint8_t *p = (uint8_t const *)pp;
 	return ((uint32_t)(p[3]) + ((uint32_t)(p[2]) << 8) +
 	    ((uint32_t)(p[1]) << 16) + ((uint32_t)(p[0]) << 24));
 }
-#endif
+//#endif
 
 #if !HAVE_DECL_LE32DEC
 static inline uint32_t le32dec(const void *pp)
@@ -100,7 +101,7 @@ static inline uint32_t le32dec(const void *pp)
 }
 #endif
 
-#if !HAVE_DECL_BE32ENC
+//#if !HAVE_DECL_BE32ENC
 static inline void be32enc(void *pp, uint32_t x)
 {
 	uint8_t *p = (uint8_t *)pp;
@@ -109,7 +110,7 @@ static inline void be32enc(void *pp, uint32_t x)
 	p[1] = (x >> 16) & 0xff;
 	p[0] = (x >> 24) & 0xff;
 }
-#endif
+//#endif
 
 #if !HAVE_DECL_LE32ENC
 static inline void le32enc(void *pp, uint32_t x)

@@ -205,16 +205,23 @@ void sha256d(unsigned char *hash, const unsigned char *data, int len)
 	int i, r;
 
 	sha256_init(S);
+
 	for (r = len; r > -9; r -= 64) {
+
 		if (r < 64)
 			memset(T, 0, 64);
+
 		memcpy(T, data + len - r, r > 64 ? 64 : (r < 0 ? 0 : r));
+
 		if (r >= 0 && r < 64)
 			((unsigned char *)T)[r] = 0x80;
+
 		for (i = 0; i < 16; i++)
 			T[i] = be32dec(T + i);
+
 		if (r < 56)
 			T[15] = 8 * len;
+
 		sha256_transform(S, T, 0);
 	}
 	memcpy(S + 8, sha256d_hash1 + 8, 32);
